@@ -1,0 +1,1 @@
+# gajih_karyawan
