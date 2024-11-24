@@ -6,32 +6,137 @@
     <title>Rekapitulasi Gaji Karyawan</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
         }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px;
+            border: 1px solid #ddd;
             text-align: center;
         }
+
+        th, td {
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td {
+            background-color: #fafafa;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        .totals-table {
+            margin-top: 30px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .totals-table td {
+            padding: 10px 20px;
+            border: none;
+        }
+
+        .totals-table td:first-child {
+            font-weight: bold;
+        }
+
+        .totals-table td:last-child {
+            text-align: right;
+        }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
     </style>
 </head>
 <body>
-    <h1>Rekapitulasi Gaji Karyawan</h1>
-    <h2>PT. MAJU JAYA</h2>
 
-    <label for="bulan">Bulan: </label>
-    <input type="text" id="bulan" name="bulan">
-    <br><br>
-    <label for="tahun">Tahun: </label>
-    <input type="text" id="tahun" name="tahun">
-    <br><br>
+<header>
+    <h1>Rekapitulasi Gaji Karyawan PT. MAJU JAYA</h1>
+</header>
+
+<div class="container">
+    <div class="form-group">
+        <label for="bulan">Bulan:</label>
+        <input type="text" id="bulan" name="bulan">
+    </div>
+    <div class="form-group">
+        <label for="tahun">Tahun:</label>
+        <input type="text" id="tahun" name="tahun">
+    </div>
+    <button onclick="addEmployee()">Tambah Data Karyawan</button>
 
     <table id="employeeTable">
         <thead>
@@ -53,10 +158,7 @@
         </tbody>
     </table>
 
-    <button onclick="addEmployee()">Tambah Data</button>
-
-    <h3>Total</h3>
-    <table>
+    <table class="totals-table">
         <tr>
             <td>Total Gapok:</td>
             <td id="totalGapok">0</td>
@@ -82,67 +184,73 @@
             <td id="totalGaber">0</td>
         </tr>
     </table>
+</div>
 
-    <script>
-        let employeeCount = 0;
-        let totalGapok = 0;
-        let totalTunjIstri = 0;
-        let totalTunjAnak = 0;
-        let totalGakot = 0;
-        let totalPajak = 0;
-        let totalGaber = 0;
+<footer>
+    <p>&copy; 2024 PT. MAJU JAYA - All Rights Reserved</p>
+</footer>
 
-        function addEmployee() {
-            employeeCount++;
+<script>
+    let employeeCount = 0;
+    let totalGapok = 0;
+    let totalTunjIstri = 0;
+    let totalTunjAnak = 0;
+    let totalGakot = 0;
+    let totalPajak = 0;
+    let totalGaber = 0;
 
-            const nama = prompt("Masukkan Nama:");
-            const gol = parseInt(prompt("Masukkan Golongan (1-4):"));
-            const status = prompt("Masukkan Status Nikah (n=belum, b=berkeluarga):");
-            const jmlhAnak = parseInt(prompt("Masukkan Jumlah Anak:"));
+    function addEmployee() {
+        employeeCount++;
 
-            let gapok = 0;
-            if (gol === 1) gapok = 750000;
-            else if (gol === 2) gapok = 1000000;
-            else if (gol === 3) gapok = 1250000;
-            else if (gol === 4) gapok = 1500000;
+        const nama = prompt("Masukkan Nama:");
+        const gol = parseInt(prompt("Masukkan Golongan (1-4):"));
+        const status = prompt("Masukkan Status Nikah (n=belum, b=berkeluarga):");
+        const jmlhAnak = parseInt(prompt("Masukkan Jumlah Anak:"));
 
-            let tunjIstri = (status === "n") ? 0.2 * gapok : 0;
-            let tunjAnak = (status === "n" && jmlhAnak <= 2) ? (jmlhAnak * 0.05 * gapok) : 0;
+        let gapok = 0;
+        if (gol === 1) gapok = 750000;
+        else if (gol === 2) gapok = 1000000;
+        else if (gol === 3) gapok = 1250000;
+        else if (gol === 4) gapok = 1500000;
 
-            let gakot = gapok + tunjIstri + tunjAnak;
-            let pajak = (gakot >= 1000000) ? 0.05 * gakot : 0.03 * gakot;
-            let gaber = gakot - pajak;
+        let tunjIstri = (status === "n") ? 0.2 * gapok : 0;
+        let tunjAnak = (status === "n" && jmlhAnak <= 2) ? (jmlhAnak * 0.05 * gapok) : 0;
 
-            totalGapok += gapok;
-            totalTunjIstri += tunjIstri;
-            totalTunjAnak += tunjAnak;
-            totalGakot += gakot;
-            totalPajak += pajak;
-            totalGaber += gaber;
+        let gakot = gapok + tunjIstri + tunjAnak;
+        let pajak = (gakot >= 1000000) ? 0.05 * gakot : 0.03 * gakot;
+        let gaber = gakot - pajak;
 
-            const tableBody = document.getElementById("employeeTable").getElementsByTagName("tbody")[0];
-            const row = tableBody.insertRow();
-            row.innerHTML = `
-                <td>${employeeCount}</td>
-                <td>${nama}</td>
-                <td>${gol}</td>
-                <td>${status === "n" ? "Belum Menikah" : "Berkeluarga"}</td>
-                <td>${jmlhAnak}</td>
-                <td>${gapok}</td>
-                <td>${tunjIstri}</td>
-                <td>${tunjAnak}</td>
-                <td>${gakot}</td>
-                <td>${pajak}</td>
-                <td>${gaber}</td>
-            `;
+        totalGapok += gapok;
+        totalTunjIstri += tunjIstri;
+        totalTunjAnak += tunjAnak;
+        totalGakot += gakot;
+        totalPajak += pajak;
+        totalGaber += gaber;
 
-            document.getElementById("totalGapok").innerText = totalGapok;
-            document.getElementById("totalTunjIstri").innerText = totalTunjIstri;
-            document.getElementById("totalTunjAnak").innerText = totalTunjAnak;
-            document.getElementById("totalGakot").innerText = totalGakot;
-            document.getElementById("totalPajak").innerText = totalPajak;
-            document.getElementById("totalGaber").innerText = totalGaber;
-        }
-    </script>
+        const tableBody = document.getElementById("employeeTable").getElementsByTagName("tbody")[0];
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+            <td>${employeeCount}</td>
+            <td>${nama}</td>
+            <td>${gol}</td>
+            <td>${status === "n" ? "Belum Menikah" : "Berkeluarga"}</td>
+            <td>${jmlhAnak}</td>
+            <td>${gapok}</td>
+            <td>${tunjIstri}</td>
+            <td>${tunjAnak}</td>
+            <td>${gakot}</td>
+            <td>${pajak}</td>
+            <td>${gaber}</td>
+        `;
+
+        document.getElementById("totalGapok").innerText = totalGapok;
+        document.getElementById("totalTunjIstri").innerText = totalTunjIstri;
+        document.getElementById("totalTunjAnak").innerText = totalTunjAnak;
+        document.getElementById("totalGakot").innerText = totalGakot;
+        document.getElementById("totalPajak").innerText = totalPajak;
+        document.getElementById("totalGaber").innerText = totalGaber;
+    }
+</script>
+
 </body>
 </html>
