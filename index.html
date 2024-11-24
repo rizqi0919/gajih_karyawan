@@ -152,6 +152,7 @@
                 <th>Gakot</th>
                 <th>Pajak</th>
                 <th>Gaber</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -241,6 +242,7 @@
             <td>${gakot}</td>
             <td>${pajak}</td>
             <td>${gaber}</td>
+            <td><button onclick="deleteEmployee(this)">Hapus</button></td>
         `;
 
         document.getElementById("totalGapok").innerText = totalGapok;
@@ -249,6 +251,32 @@
         document.getElementById("totalGakot").innerText = totalGakot;
         document.getElementById("totalPajak").innerText = totalPajak;
         document.getElementById("totalGaber").innerText = totalGaber;
+    }
+
+    function deleteEmployee(button) {
+        const row = button.parentNode.parentNode;
+        const gapok = parseInt(row.cells[5].innerText);
+        const tunjIstri = parseInt(row.cells[6].innerText);
+        const tunjAnak = parseInt(row.cells[7].innerText);
+        const gakot = parseInt(row.cells[8].innerText);
+        const pajak = parseInt(row.cells[9].innerText);
+        const gaber = parseInt(row.cells[10].innerText);
+
+        totalGapok -= gapok;
+        totalTunjIstri -= tunjIstri;
+        totalTunjAnak -= tunjAnak;
+        totalGakot -= gakot;
+        totalPajak -= pajak;
+        totalGaber -= gaber;
+
+        document.getElementById("totalGapok").innerText = totalGapok;
+        document.getElementById("totalTunjIstri").innerText = totalTunjIstri;
+        document.getElementById("totalTunjAnak").innerText = totalTunjAnak;
+        document.getElementById("totalGakot").innerText = totalGakot;
+        document.getElementById("totalPajak").innerText = totalPajak;
+        document.getElementById("totalGaber").innerText = totalGaber;
+
+        row.remove();
     }
 </script>
 
