@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekapitulasi Gaji Karyawan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rekapitulasi Gaji Karyawan</h1>
+    <h2>PT. MAJU JAYA</h2>
+
+    <label for="bulan">Bulan: </label>
+    <input type="text" id="bulan" name="bulan">
+    <br><br>
+    <label for="tahun">Tahun: </label>
+    <input type="text" id="tahun" name="tahun">
+    <br><br>
+
+    <table id="employeeTable">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Gol</th>
+                <th>Status Nikah</th>
+                <th>Jumlah Anak</th>
+                <th>Gapok</th>
+                <th>Tunj Istri</th>
+                <th>Tunj Anak</th>
+                <th>Gakot</th>
+                <th>Pajak</th>
+                <th>Gaber</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <button onclick="addEmployee()">Tambah Data</button>
+
+    <h3>Total</h3>
+    <table>
+        <tr>
+            <td>Total Gapok:</td>
+            <td id="totalGapok">0</td>
+        </tr>
+        <tr>
+            <td>Total Tunj Istri:</td>
+            <td id="totalTunjIstri">0</td>
+        </tr>
+        <tr>
+            <td>Total Tunj Anak:</td>
+            <td id="totalTunjAnak">0</td>
+        </tr>
+        <tr>
+            <td>Total Gakot:</td>
+            <td id="totalGakot">0</td>
+        </tr>
+        <tr>
+            <td>Total Pajak:</td>
+            <td id="totalPajak">0</td>
+        </tr>
+        <tr>
+            <td>Total Gaber:</td>
+            <td id="totalGaber">0</td>
+        </tr>
+    </table>
+
+    <script>
+        let employeeCount = 0;
+        let totalGapok = 0;
+        let totalTunjIstri = 0;
+        let totalTunjAnak = 0;
+        let totalGakot = 0;
+        let totalPajak = 0;
+        let totalGaber = 0;
+
+        function addEmployee() {
+            employeeCount++;
+
+            const nama = prompt("Masukkan Nama:");
+            const gol = parseInt(prompt("Masukkan Golongan (1-4):"));
+            const status = prompt("Masukkan Status Nikah (n=belum, b=berkeluarga):");
+            const jmlhAnak = parseInt(prompt("Masukkan Jumlah Anak:"));
+
+            let gapok = 0;
+            if (gol === 1) gapok = 750000;
+            else if (gol === 2) gapok = 1000000;
+            else if (gol === 3) gapok = 1250000;
+            else if (gol === 4) gapok = 1500000;
+
+            let tunjIstri = (status === "n") ? 0.2 * gapok : 0;
+            let tunjAnak = (status === "n" && jmlhAnak <= 2) ? (jmlhAnak * 0.05 * gapok) : 0;
+
+            let gakot = gapok + tunjIstri + tunjAnak;
+            let pajak = (gakot >= 1000000) ? 0.05 * gakot : 0.03 * gakot;
+            let gaber = gakot - pajak;
+
+            totalGapok += gapok;
+            totalTunjIstri += tunjIstri;
+            totalTunjAnak += tunjAnak;
+            totalGakot += gakot;
+            totalPajak += pajak;
+            totalGaber += gaber;
+
+            const tableBody = document.getElementById("employeeTable").getElementsByTagName("tbody")[0];
+            const row = tableBody.insertRow();
+            row.innerHTML = `
+                <td>${employeeCount}</td>
+                <td>${nama}</td>
+                <td>${gol}</td>
+                <td>${status === "n" ? "Belum Menikah" : "Berkeluarga"}</td>
+                <td>${jmlhAnak}</td>
+                <td>${gapok}</td>
+                <td>${tunjIstri}</td>
+                <td>${tunjAnak}</td>
+                <td>${gakot}</td>
+                <td>${pajak}</td>
+                <td>${gaber}</td>
+            `;
+
+            document.getElementById("totalGapok").innerText = totalGapok;
+            document.getElementById("totalTunjIstri").innerText = totalTunjIstri;
+            document.getElementById("totalTunjAnak").innerText = totalTunjAnak;
+            document.getElementById("totalGakot").innerText = totalGakot;
+            document.getElementById("totalPajak").innerText = totalPajak;
+            document.getElementById("totalGaber").innerText = totalGaber;
+        }
+    </script>
+</body>
+</html>
